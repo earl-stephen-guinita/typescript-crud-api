@@ -1,7 +1,7 @@
 // src/server.ts
 import express, { Application } from 'express';
 import cors from 'cors';
-import { errorHandler } from './_middleware/errorhandler';
+import { errorHandler } from './_middleware/errorHandler';
 import { initialize } from './_helpers/db';
 import userController from './users/users.controller';
 
