@@ -1,5 +1,5 @@
 // src/_helpers/db.ts
-const config = require('../../config.json');
+import config = require('../../config.json');
 import mysql from 'mysql2/promise';
 import { Sequelize } from 'sequelize';
 
