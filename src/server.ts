@@ -4,29 +4,30 @@ import cors from 'cors';
 import { errorHandler } from './_middleware/errorHandler';
 import { initialize } from './_helpers/db';
 import userController from './users/users.controller';
+import authController from './auth/auth.controller';
 
 const app: Application = express();
 
-// Middleware
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
-app.use(cors());
+app.use(cors({
+    origin: ['http://127.0.0.1:5500', 'http://localhost:5500', 'http://localhost:4000']
+}));
 
-// API Routes
-app.use('/users', userController);
+// Routes
+app.use('/api', authController);          // POST /api/register, POST /api/login
+app.use('/users', userController);        // CRUD /users
 
-// Global Error Handler
 app.use(errorHandler);
 
-// Start server + initialize database
 const PORT = process.env.PORT || 4000;
 
 initialize()
     .then(() => {
         app.listen(PORT, () => {
             console.log(`✅ Server running on http://localhost:${PORT}`);
-            console.log(`🔐 Test with: POST /users with { email, password, ... }`);
-        })
+            console.log(`   Admin login: POST /api/login`);
+        });
     })
     .catch((err) => {
         console.error('❌ Failed to initialize database:', err);
