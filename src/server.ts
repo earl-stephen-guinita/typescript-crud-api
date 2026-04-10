@@ -5,6 +5,9 @@ import { errorHandler } from './_middleware/errorHandler';
 import { initialize } from './_helpers/db';
 import userController from './users/users.controller';
 import authController from './auth/auth.controller';
+import departmentController from './departments/departments.controller';
+import employeeController from './employees/employees.controller';
+import requestController from './requests/requests.controller';
 
 const app: Application = express();
 
@@ -15,8 +18,11 @@ app.use(cors({
 }));
 
 // Routes
-app.use('/api', authController);          // POST /api/register, POST /api/login
-app.use('/users', userController);        // CRUD /users
+app.use('/api', authController);
+app.use('/users', userController);
+app.use('/api/departments', departmentController);
+app.use('/api/employees', employeeController);
+app.use('/api/requests', requestController);
 
 app.use(errorHandler);
 
@@ -26,7 +32,6 @@ initialize()
     .then(() => {
         app.listen(PORT, () => {
             console.log(`✅ Server running on http://localhost:${PORT}`);
-            console.log(`   Admin login: POST /api/login`);
         });
     })
     .catch((err) => {
