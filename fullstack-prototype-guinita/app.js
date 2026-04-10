@@ -22,7 +22,7 @@ function handleRouting() {
     }
 
     // Redirect non-admins away from admin pages
-    if (adminRoutes.includes(hash) && (!isLoggedIn || currentUser.role !== 'admin')) {
+    if (adminRoutes.includes(hash) && (!isLoggedIn || (currentUser.role !== 'Admin' && currentUser.role !== 'admin'))) {
         window.location.hash = '#/login';
         return;
     }
@@ -96,7 +96,7 @@ function setAuthState(isAuth, user = null) {
         body.classList.add("authenticated");
         body.classList.remove("not-authenticated");
         usernameBtn.textContent = user.firstName;
-        if (user.role === "admin") {
+        if (user.role === "Admin" || user.role === "admin") {
             body.classList.add("is-admin");
         } else {
             body.classList.remove("is-admin");
